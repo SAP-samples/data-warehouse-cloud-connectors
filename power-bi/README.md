@@ -1,9 +1,9 @@
 # Data Warehouse Cloud PowerBI Connector
 
 ## About
-This is a sample for using SAP Data Warehouse Cloud OData APIs with PowerBI. The following sections decribe how to download, configure and deploy the custom connector for PowerBi. 
+This is a sample for using SAP Data Warehouse Cloud OData APIs with PowerBI. The following sections decribe how to download, configure and deploy the custom connector for PowerBi. Despite the creation of an OAuth client, all tasks are client-side only.
 
-To get a visual impression of using the custom connecter, please visit the blog post [SAP Data Warehouse Cloud: OData Connector for PowerBi](https://blogs.sap.com/2022/10/13/sap-data-warehouse-cloud:-odata-connector-for-powerbi/)
+To get a visual impression on using the custom connecter, please visit the blog post [SAP Data Warehouse Cloud: OData Connector for PowerBi](https://blogs.sap.com/2022/10/13/sap-data-warehouse-cloud:-odata-connector-for-powerbi/)
 
 # Configure SAP Data Warehouse Cloud
 Please logon to your tenant and open the _App Integration_ tab (Navigate via System => Administration => Tab App Integration).
