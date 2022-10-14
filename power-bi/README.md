@@ -51,7 +51,7 @@ Please replace the dummy values based on the instructions below.
 Now that we have all required information in place, apply the changes to the file connections.json and save it to your folder.
 
 ## Build the connector
-For building and packaging: Just zip the whole content of the power-bi folder (the content of the folder only - excluding the folder itself). Change the extension from zip to mez. Ignore any complains of the file explorer. Done.
+For building and packaging: Just zip the whole content of the power-bi folder into an archive named "SAP_DWC_01" (the content of the folder only - excluding the folder itself). Change the extension from zip to mez. Ignore any complains of the file explorer. Done.
 
 ## Deploy the connector
 Ensure that the following folders exists - if not, please create them:
@@ -60,23 +60,25 @@ Ensure that the following folders exists - if not, please create them:
  - Create folder “Power BI Desktop”
  - Create subfolder “Custom Connectors"
 
- 
+ Copy the custom connector file "SAP_DWC_01" the folder "“Custom Connectors".
 
 ## Test - Deployment
 1. Start MS PowerBi - if your security settings are on default (recommended), MS PowerBi should show a pop-up indicating that a custom connector has been found - but it will not be active.
 
-    _Test passed_: MS PowerBi found the file and interpreted the content as "custom connector"
+   > _Test passed_: MS PowerBi found the file and interpreted the content as "custom connector"
 
 2. Adjust the security settings (see video in blog post) to "Allow any extension to load without validation". Close and re-open MS PowerBi. The pop-up should not show up any more. 
 
-    _Test passed_: security settings are OK
+    >_Test passed_: security settings are OK
 
 3. Start from a blank query and choose the "Get data" option. On the list select the "More ..." and search for SAP. Now you should see a connector with the name "SAP Data Warehouse Cloud".
 
-    _Test passed_: The registration of the custom connectors was successfull.
+    >_Test passed_: The registration of the custom connectors was successfull.
 
 ## Next Steps
-Follow the scenarios outlined in the blog post - search for an OData Service and load your first data. Don't miss to leave your comments or questions.
+Follow the scenarios outlined in the [blog post](https://blogs.sap.com/2022/10/13/sap-data-warehouse-cloud:-odata-connector-for-powerbi/) - search for an OData Service and load your first data. Then start building your MS PowerBi applications based on data imported from SAP Data Warehouse Cloud. 
+
+And finally: Don't miss to leave your comments or questions!
 
 ## Outlook
 Once this is working on local PC you might want to use it in the context of the browser based MS PowerBi and e.g. trigger or schedule a data refresh from there. This possible using the "on-premise data gateways". See [service-gateway-custom-connectors](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors) for more details.
