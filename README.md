@@ -1,9 +1,9 @@
 # SAP Data Warehouse Cloud - Connectors
 
 ## Description
-This Git-Hub repo is dedicated for samples that enable 3rd-party clients to connect to SAP Data Warehouse Cloud. As of now there is a sample for [MS PowerBi](https://github.com/SAP-samples/sap-data-warehouse-cloud---connectors/blob/main/power-bi/README.md).
+This Git-Hub repo contains samples that enable 3rd-party clients to connect to SAP Data Warehouse Cloud. As of now there is one for [MS PowerBi](https://github.com/SAP-samples/sap-data-warehouse-cloud---connectors/blob/main/power-bi/README.md).
 
-Please check out the respective folders for readme files and installation instructions.
+Please check out the respective folders or follow the link to find the readme files and installation instructions.
 
 ## How to obtain support
 [Create an issue](https://github.com/SAP-samples/sap-data-warehouse-cloud---connectors/issues) in this repository if you find a bug or have questions about the content.
