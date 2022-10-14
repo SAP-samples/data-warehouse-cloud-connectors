@@ -1,13 +1,29 @@
 # Data Warehouse Cloud PowerBI Connector
 
 ## About
-This is a PoC for using DWC Public OData APIs with PowerBI.
+This is a sample for using SAP Data Warehouse Cloud OData APIs with PowerBI. The following sections decribe how to download, configure and deploy the custom connector for PowerBi. 
 
-## Download Connector
+To get a visual impression of using the custom connecter, please visit the blog post [SAP Data Warehouse Cloud: OData Connector for PowerBi](https://blogs.sap.com/2022/10/13/sap-data-warehouse-cloud:-odata-connector-for-powerbi/)
+
+# Configure SAP Data Warehouse Cloud
+Please logon to your tenant and open the _App Integration_ tab (Navigate via System => Administration => Tab App Integration).
+
+Now we have to create an oauth client, that will be used by the custom connector. Note that this client is not the business user but authorizes the custom connector client only. At runtime, the user will be directed to his Identity Provider.
+
+1. Select the option "Add new OAuth Client"
+2. Use the following values for the client configuration:
+- Name: PowerBi OAuth Client
+- Purpose: interactive Usage
+- Redirect URI: https://oauth.powerbi.com/views/oauthredirect.html
+
+Upon saving the system with automatically generate an client id and secret (=passwort). These two parameters will be required later upon configuration of the custom connection on the client side.
+# MS PowerBi - Custom Connector
+## Download
 The folder power-bi contains all data required for the custom connector. Either download these files or clone the git repository (recommended).
+## Configure
+The implementation of the connector is generic - the only task we have to do is to add your tenant specific information to the file "connections.json".
 
-## Configure the Connector
-The implementation of the connector is generic - the only task we have to do is to add your tenant specific information to the file "connections.json". Replace the dummy values <value> with your data.
+_*Content of "connections.json"*_
 ```json
 {
     "host": "<tenant URL>",
@@ -19,38 +35,32 @@ The implementation of the connector is generic - the only task we have to do is 
     "auth_authorize_url": "<authorize URL></oauth/authorize>"
 }
 ```
-**host**: this is the tenant URL, e.g. https://my-tenant.eu10.hcs.cloud.sap (without a “/” at the end !). 
+Please replace the dummy values based on the instructions below.
 
-For the next infos, please logon to your tenant and open the _App Integration_ tab (Navigate via System => Administration => Tab App Integration)
-
-**auth_token_url**: this is the URL with title Token URL (typically ends with /token)
-
-**auth_authorize_url**: this is the URL with title Authorization URL (typically ends with /authorize)
-
-Now we have to create an oauth client, that will be used by the custom connector. Note that this client is not the business user but authorizes the custom connector client only. At runtime, the user will be directed to his Identity Provider.
-
-1. Select the option "Add new OAuth Client"
-2. Use the following values for the client configuration:
-- Name: PowerBi OAuth Client
-- Purpose: interactive Usage
-- Redirect URI: https://oauth.powerbi.com/views/oauthredirect.html
-
-Upon saving the system with automatically generate an client id and secret (=passwort). You might need to re-open after saving to see these values:
-
-**client_id**: copy the long uid-like id (field name is OAuth Client Id)
-
-**client_secret**: copy the secret (field name secret)
+### _"host"_
+> Tenant URL, e.g. https://my-tenant.eu10.hcs.cloud.sap (without a “/” at the end !). 
+### _"auth_token_url"_
+> Copy the token URL from the _App Integration_ tab (URL typically ends with /token)
+### _"auth_authorize_url"_
+> Copy the authorization URL from the _App Integration_ tab (typically ends with /authorize)
+### _"client_id"_
+> Use the client id generated in the previous chapter.
+### _"client_secret"_ 
+> Use the client secret generated in the previous chapter.
 
 Now that we have all required information in place, apply the changes to the file connections.json and save it to your folder.
 
 ## Build the connector
-For building and packaging: just zip the whole content of the power-bi folder (just the content of the folder - excluding the folder itself). Change the extension from zip to mez. Ignore any complains of the file explorer.
+For building and packaging: Just zip the whole content of the power-bi folder (the content of the folder only - excluding the folder itself). Change the extension from zip to mez. Ignore any complains of the file explorer. Done.
 
 ## Deploy the connector
-Ensure that the following folder exists. If not, please create the missing folder structur:
+Ensure that the following folders exists - if not, please create them:
 
-Navigate to your document folder and search for: “Power BI Desktop” - create if required
-Create a subfolder for “Power BI Desktop” with the name “Custom Connectors"
+ - Navigate to your document folder
+ - Create folder “Power BI Desktop”
+ - Create subfolder “Custom Connectors"
+
+ 
 
 ## Test - Deployment
 1. Start MS PowerBi - if your security settings are on default (recommended), MS PowerBi should show a pop-up indicating that a custom connector has been found - but it will not be active.
@@ -69,6 +79,16 @@ Create a subfolder for “Power BI Desktop” with the name “Custom Connectors
 Follow the scenarios outlined in the blog post - search for an OData Service and load your first data. Don't miss to leave your comments or questions.
 
 ## Outlook
-Once this is working on local PC you might want to use it in the context of the browser based MS PowerBi and e.g. trigger or schedule a data refresh from there. This possible using the "on-premise data gateways". 
+Once this is working on local PC you might want to use it in the context of the browser based MS PowerBi and e.g. trigger or schedule a data refresh from there. This possible using the "on-premise data gateways". See [service-gateway-custom-connectors](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors) for more details.
 
-Current status: So far we managed to deploy the customer connector and see it recognized in the web app. Unfortunately, the authentication using the oauth-flow is failing - the browser dialog appears and it seems not to be able to fetch and store the token.
+**Current status:** So far we managed to deploy the customer connector and see it recognized in the web app. Unfortunately, the authentication using the oauth-flow is failing - the browser dialog appears and it seems not to be able to fetch and store the token.
+
+# Appendix
+For a technical background of PowerBi Custom Connectors, please check out the following pages:
+ - [Development and Test Environment](https://learn.microsoft.com/en-us/power-query/installingsdk)
+ - [Tutorial TripPin](https://learn.microsoft.com/en-us/power-query/samplesdirectory#trippin)
+ - [service-gateway-custom-connectors](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors)
+
+ For documenation around SAP Data Warehouse Cloud - OData:
+  - [Blog Post: Connecting with PowerBi via a blank query](https://blogs.sap.com/2022/09/23/connecting-sap-data-warehouse-cloud-odata-api-with-powerbi-via-a-blank-query-2/)
+  - [SAP Help - OData](https://help.sap.com/docs/SAP_DATA_WAREHOUSE_CLOUD/c8a54ee704e94e15926551293243fd1d/7a453609c8694b029493e7d87e0de60a.html)
