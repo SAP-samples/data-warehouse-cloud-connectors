@@ -15,7 +15,7 @@ The sample is provided without any service level agreement. Please test the soft
 Contribution to the project is welcome. Please note that SAP will request a Developer Dertificate of Origin. See [here](https://github.com/SAP-samples/sap-data-warehouse-cloud---connectors/blob/main/CONTRIBUTING.md) for more details. 
 
 ## Code of Conduct
-Find details for the [code of conduct](https://github.com/SAP-samples/data-warehouse-cloud---connectors/blob/main/CODE_OF_CONDUCT.md) here.
+Find details for the [code of conduct](https://github.com/SAP-samples/data-warehouse-cloud-connectors/blob/main/CODE_OF_CONDUCT.md) here.
 ## Download & Installation
 Please checkout the details for the individual connectors, e.g. for [MS PowerBi](https://github.com/SAP-samples/sap-data-warehouse-cloud---connectors/blob/main/power-bi/README.md)
 ## Configuration
