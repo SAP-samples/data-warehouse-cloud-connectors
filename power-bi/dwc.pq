@@ -1,5 +1,8 @@
 ﻿section SapDataWarehouseCloudConnector;
 
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
+
 // Connection Infos for DWC System
 connections = Json.Document(Extension.Contents("connections.json"));
 

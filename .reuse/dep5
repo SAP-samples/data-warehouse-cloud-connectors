@@ -24,14 +24,26 @@ Disclaimer: The code in this project may include calls to APIs ("API Calls") of
  you any rights to use or access any SAP External Product, or provide any third
  parties the right to use of access any SAP External Product, through API Calls.
 
-Files: /power-bi
+Files: power-bi/dwc.mproj
 Copyright:  2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
 License: Apache-2.0
 
-Files: <THIRD-PARTY-FILE-OR-FOLDER-LIST>
-Copyright: <COPYRIGHT-OF-THIRD-PARTY-CODE>
-License: <LICENSE-OF-THIRD-PARTY-CODE>
+Files: power-bi/dwc.sln
+Copyright:  2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
+License: Apache-2.0
 
-Files: <ANOTHER-THIRD-PARTY-FILE-OR-FOLDER-LIST>
-Copyright: <COPYRIGHT-OF-ANOTHER-THIRD-PARTY-CODE>
-License: <LICENSE-OF-ANOTHER- THIRD-PARTY-CODE>
+Files: power-bi/resources.resx
+Copyright:  2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
+License: Apache-2.0
+
+Files: power-bi/connections.json
+Copyright:  2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
+License: Apache-2.0
+
+Files: CONTRIBUTING.md
+Copyright: Copyright (C) 2004, 2006 The Linux Foundation and its contributors.
+License: GPL-2.0-or-later
+
+Files: power-bi/*.png
+Copyright:  Copyright (c) 2017 Microsoft Corporation
+License: MIT

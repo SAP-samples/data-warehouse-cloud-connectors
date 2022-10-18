@@ -1,5 +1,8 @@
 # Data Warehouse Cloud PowerBI Connector
-
+<!---
+SPDX-License-Identifier: Apache-2.0
+SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
+--->
 ## About
 This is a sample for using SAP Data Warehouse Cloud OData APIs with PowerBI. The following sections decribe how to download, configure and deploy the custom connector for PowerBi. Despite the creation of an OAuth client, all tasks are client-side only.
 
