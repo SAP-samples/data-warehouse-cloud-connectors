@@ -120,10 +120,61 @@
   <data name="AuthenticationLabel" xml:space="preserve">
     <value>SAP Data Warehouse Cloud Authentication</value>
   </data>
+  <data name="ConnectionTitleDWC" xml:space="preserve">
+    <value>SAP Data Warehouse Cloud</value>
+  </data>
+  <data name="ConnectionTitleSAC" xml:space="preserve">
+    <value>SAP Analytics Cloud</value>
+  </data>
+  <data name="DWC_HostCaption" xml:space="preserve">
+    <value>SAP DWC Tenant URL</value>
+  </data>
+  <data name="DWC_HostDescription" xml:space="preserve">
+    <value>Select the tenant URL of your DWC System</value>
+  </data>
+  <data name="DWC_SpaceCaption" xml:space="preserve">
+    <value>Space Name</value>
+  </data>
+  <data name="DWC_SpaceDescription" xml:space="preserve">
+    <value>Provide the name of the space - for service type "search" you can use wild cards</value>
+  </data>
+  <data name="DWC_ViewCaption" xml:space="preserve">
+    <value>View Name</value>
+  </data>
+  <data name="DWC_ViewDescription" xml:space="preserve">
+    <value>Provide the name of the view - for service type "search" you can use wild cards</value>
+  </data>
   <data name="FormulaHelp" xml:space="preserve">
     <value>SapDataWarehouseCloud.Contents</value>
   </data>
-  <data name="FormulaTitle" xml:space="preserve">
-    <value>SAP Data Warehouse Cloud</value>
+  <data name="ODataSeriveTypeSearch" xml:space="preserve">
+    <value>Search for available OData services</value>
+  </data>
+  <data name="ODataServiceTypeCaption" xml:space="preserve">
+    <value>Select OData Service Type</value>
+  </data>
+  <data name="ODataServiceTypeDescription" xml:space="preserve">
+    <value>Please choose your service type: catalog to browse for odata services or select directly a view</value>
+  </data>
+  <data name="ODataServiceTypeDWCView" xml:space="preserve">
+    <value>Read data from DWC View</value>
+  </data>
+  <data name="SAC_HostCaption" xml:space="preserve">
+    <value>SAP SAC Tenant URL</value>
+  </data>
+  <data name="SAC_HostDescription" xml:space="preserve">
+    <value>Select the tenant URL of your SAC System</value>
+  </data>
+  <data name="SAC_NamespaceCaption" xml:space="preserve">
+    <value>Namespace</value>
+  </data>
+  <data name="SAC_NamespaceDescription" xml:space="preserve">
+    <value>Enter the namespace id, e.g. sac</value>
+  </data>
+  <data name="SAC_ProviderIdCaption" xml:space="preserve">
+    <value>Provider Id</value>
+  </data>
+  <data name="SAC_ProviderIdDescription" xml:space="preserve">
+    <value>Enter the provider id related to your model</value>
   </data>
 </root>

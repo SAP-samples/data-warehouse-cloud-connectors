@@ -68,9 +68,9 @@
     <Compile Include="connections.json">
       <SubType>Content</SubType>
     </Compile>
-    <Content Include="connections_FieldTraining.json">
+    <Compile Include="connections_FieldTraining.json">
       <SubType>Content</SubType>
-    </Content>
+    </Compile>
     <Content Include="dwc.query.pq">
       <SubType>Code</SubType>
     </Content>
