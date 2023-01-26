@@ -9,7 +9,7 @@ connections = Json.Document(Extension.Contents("connections.json"));
 redirect_uri    = "https://oauth.powerbi.com/views/oauthredirect.html";
 windowWidth     = 1200;
 windowHeight    = 1000;
-version         = "1.40";
+version         = "1.50";
 
 product_SAC     = "SAC";
 product_DWC     = "DWC";
@@ -50,21 +50,19 @@ viewNameDWC = type text meta [
 // Custom Connector Registration for SAP DWC
 // -------------------------------------------
 dwcFunction = type function (
-    host            as hostCustomDWC,
-//  selectedSource  as serviceSelectionDWC,
+    host   as hostCustomDWC,
     space  as spaceNameDWC,
     view   as viewNameDWC
     ) as any meta [
-        Documentation.Name = "SAP Data Warehouse Cloud - OData"
+        Documentation.Name = Extension.LoadString("DWC_PopUp_ReadData")
     ];
 
 dwcFunctionCatalog = type function (
     host            as hostCustomDWC,
-//  selectedSource  as serviceSelectionDWC,
     optional space  as spaceNameDWC,
     optional view   as viewNameDWC
     ) as any meta [
-        Documentation.Name = "SAP Data Warehouse Cloud - OData"
+        Documentation.Name = Extension.LoadString("DWC_PopUp_CatalogSearch")
     ];
 
 [DataSource.Kind="SapDataWarehouseCloudConnector", Publish="SapDataWarehouseCloudConnector.UI"]
@@ -209,10 +207,9 @@ SapDataWarehouseCloudConnector = [
         OAuth = [
               StartLogin  = StartLoginDWC
             , FinishLogin = FinishLogin
-            , Refresh_DWC = Refresh
+            , Refresh     = Refresh_DWC
             ]
          ]
-    // Label = Extension.LoadString("AuthenticationLabel")
 ];
 
 SAPDWC_Catalog = [
@@ -221,16 +218,14 @@ SAPDWC_Catalog = [
         OAuth = [
               StartLogin  = StartLoginDWC
             , FinishLogin = FinishLogin
-            , Refresh_DWC = Refresh
+            , Refresh     = Refresh_DWC
             ]
          ]
-    // Label = Extension.LoadString("AuthenticationLabel")
 ];
-
 
 SapDataWarehouseCloudConnector.UI = [
     Beta = true,
-    dataSourceLabel = Extension.LoadString("ConnectionTitleDWC") & "-Data"& " (" & version & ")",
+    dataSourceLabel = Extension.LoadString("ConnectionTitleDWC") & " - Data"& " (" & version & ")",
     ButtonText      = { dataSourceLabel, Extension.LoadString("FormulaHelp") },
     SourceImage     = SapDataWarehouseCloudConnector.Icons,
     SourceTypeImage = SapDataWarehouseCloudConnector.Icons
@@ -238,7 +233,7 @@ SapDataWarehouseCloudConnector.UI = [
 
 SAPDWC_Catalog.UI = [
     Beta = true,
-    dataSourceLabel = Extension.LoadString("ConnectionTitleDWC")& "-Catalog"& " (" & version & ")",
+    dataSourceLabel = Extension.LoadString("ConnectionTitleDWC")& " - Catalog"& " (" & version & ")",
     ButtonText      = { dataSourceLabel, Extension.LoadString("FormulaHelp") },
     SourceImage     = SapDataWarehouseCloudConnector.Icons,
     SourceTypeImage = SapDataWarehouseCloudConnector.Icons
@@ -302,18 +297,18 @@ TokenMethod = (code, connection) =>
                 ])),
                 Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth]
             ]),
-        Parts = Json.Document(Response)
+        TokenList = Json.Document(Response)
     in
-        Parts;
+        TokenList;
 
-Refresh_DWC = (dataSourcePath, refresh_token) => 
+Refresh_DWC = (dataSourcePath, oldCredential) => 
     let
         product = product_DWC,
-        result = Refresh(product, dataSourcePath, refresh_token)
+        result = Refresh(product, dataSourcePath, oldCredential)
     in
         result;
 
- Refresh = (product, dataSourcePath, refresh_token) => 
+ Refresh = (product, dataSourcePath, oldCredential) => 
     let
         host = Json.Document(dataSourcePath)[host],
         connectionsByProduct = List.Select(connections, each Record.Field(_,"product") = product),
@@ -322,8 +317,10 @@ Refresh_DWC = (dataSourcePath, refresh_token) =>
 
         BasicAuth = Binary.ToText(Text.ToBinary(connection[client_id] & ":" & connection[client_secret]),0),
 
+        refreshToken = oldCredential,
+
         Request = Text.ToBinary(Uri.BuildQueryString(
-                         [   refresh_token = refresh_token,
+                         [   refresh_token = refreshToken,
                                 grant_type = "refresh_token" ] )),
 
         RequestHeaders = [ #"Content-type" = "application/x-www-form-urlencoded"
@@ -335,6 +332,6 @@ Refresh_DWC = (dataSourcePath, refresh_token) =>
                       [ Content = Request,
                         Headers = RequestHeaders ]),
 
-        Parts = Json.Document(Response)
+        NewTokenList = Json.Document(Response)
     in
-        Parts;
+        NewTokenList;

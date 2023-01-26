@@ -1,9 +1,0 @@
-{
-    "host": "<tenant URL>",
-
-    "client_id": "<client id>",
-    "client_secret": "<client secret>",
-
-    "auth_token_url": "<token URL></oauth/token>",
-    "auth_authorize_url": "<authorize URL></oauth/authorize>"
-}

@@ -3,6 +3,14 @@
 SPDX-License-Identifier: Apache-2.0
 SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
 --->
+## News
+The OData API of SAP DataWarehouseCloud has been updated. Please upgrade to the new version 1.40.
+What's new with Version 1.40?
+ - data refresh after publishing to PowerBi Web is now possible
+ - restructure parameter/connection screen: the catalog search and data access has been split into two connections.
+   The option to limit the row cound ($top) has been removed. Now PowerBi uses a default of 1000 for the preview and unlimited for data access 
+- the structure of connection.json file has changed to handle several system and system types. The latter is a preparation to support SAC.
+
 ## About
 This is a sample for using SAP Data Warehouse Cloud OData APIs with PowerBI. The following sections decribe how to download, configure and deploy the custom connector for PowerBi. Despite the creation of an OAuth client, all tasks are client-side only.
 
@@ -31,20 +39,21 @@ The implementation of the connector is generic - the only task we have to do is 
 
 _*Content of "connections.json"*_
 ```json
-{
-    "host": "<tenant URL>",
+[{
+    "product":"DWC",
+    "host": "<host name - without https://>",
 
     "client_id": "<client id>",
     "client_secret": "<client secret>",
 
     "auth_token_url": "<token URL></oauth/token>",
     "auth_authorize_url": "<authorize URL></oauth/authorize>"
-}
+}]
 ```
 Please replace the dummy values based on the instructions below.
 
 ### _"host"_
-> Tenant URL, e.g. https://my-tenant.eu10.hcs.cloud.sap (without a “/” at the end !). 
+> host name, e.g. my-tenant.eu10.hcs.cloud.sap (without a “/” at the end !). 
 ### _"auth_token_url"_
 > Copy the token URL from the _**App Integration**_ tab (URL typically ends with /token)
 ### _"auth_authorize_url"_

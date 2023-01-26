@@ -118,19 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AuthenticationLabel" xml:space="preserve">
-    <value>SAP Data Warehouse Cloud Authentication</value>
+    <value>SAP Datasphere Authentication</value>
   </data>
   <data name="ConnectionTitleDWC" xml:space="preserve">
-    <value>SAP Data Warehouse Cloud</value>
+    <value>SAP Datasphere</value>
   </data>
   <data name="ConnectionTitleSAC" xml:space="preserve">
     <value>SAP Analytics Cloud</value>
   </data>
   <data name="DWC_HostCaption" xml:space="preserve">
-    <value>SAP DWC Tenant URL</value>
+    <value>SAP  Datasphere Tenant URL</value>
   </data>
   <data name="DWC_HostDescription" xml:space="preserve">
-    <value>Select the tenant URL of your DWC System</value>
+    <value>Select the tenant URL of your SAP Datasphere System</value>
+  </data>
+  <data name="DWC_PopUp_CatalogSearch" xml:space="preserve">
+    <value>SAP  Datasphere - OData - Catalog Search</value>
+  </data>
+  <data name="DWC_PopUp_ReadData" xml:space="preserve">
+    <value>SAP  Datasphere - OData - Read Data</value>
   </data>
   <data name="DWC_SpaceCaption" xml:space="preserve">
     <value>Space Name</value>
@@ -157,7 +163,7 @@
     <value>Please choose your service type: catalog to browse for odata services or select directly a view</value>
   </data>
   <data name="ODataServiceTypeDWCView" xml:space="preserve">
-    <value>Read data from DWC View</value>
+    <value>Read data from SAP Datasphere View</value>
   </data>
   <data name="SAC_HostCaption" xml:space="preserve">
     <value>SAP SAC Tenant URL</value>
