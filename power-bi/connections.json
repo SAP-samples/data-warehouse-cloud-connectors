@@ -1,7 +1,7 @@
 [
   {
     "product": "DWC",
-    "host": "<tenant URL>",
+    "host": "<host name of the tenant - without leading https://>",
 
     "client_id": "<client id>",
     "client_secret": "<client secret>",
