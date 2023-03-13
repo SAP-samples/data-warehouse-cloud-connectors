@@ -9,7 +9,8 @@ What's new with Version 1.40?
  - data refresh after publishing to PowerBi Web is now possible
  - restructure parameter/connection screen: the catalog search and data access has been split into two connections.
    The option to limit the row cound ($top) has been removed. Now PowerBi uses a default of 1000 for the preview and unlimited for data access 
-- the structure of connection.json file has changed to handle several system and system types. The latter is a preparation to support SAC.
+ - the structure of connection.json file has changed to handle several system and system types. The latter is a preparation to support SAC.
+ - the property host name now expects the host name (without https://) and not the URL anymore
 
 ## About
 This is a sample for using SAP Data Warehouse Cloud OData APIs with PowerBI. The following sections decribe how to download, configure and deploy the custom connector for PowerBi. Despite the creation of an OAuth client, all tasks are client-side only.

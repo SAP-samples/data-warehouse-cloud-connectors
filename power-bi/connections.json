@@ -1,7 +1,7 @@
 [
   {
     "product": "DWC",
-    "host": "<host name - without https://>",
+    "host": "<host name of the tenant - without leading https://>",
 
     "client_id": "<client id>",
     "client_secret": "<client secret>",
@@ -11,7 +11,7 @@
   },
   {
     "product": "SAC",
-    "host": "<host name - without https://>",
+    "host": "<host name of the tenant - without leading https://>",
 
     "client_id": "<client id>",
     "client_secret": "<client secret>",
