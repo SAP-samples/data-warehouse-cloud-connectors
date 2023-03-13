@@ -107,7 +107,7 @@ And finally: Don't miss to leave your comments or questions!
 ## Outlook
 Once this is working on local PC you might want to use it in the context of the browser based MS PowerBi and e.g. trigger or schedule a data refresh from there. This possible using the "on-premise data gateways". See [service-gateway-custom-connectors](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors) for more details.
 
-**Current status:** So far we managed to deploy the customer connector and see it recognized in the web app. Unfortunately, the authentication using the oauth-flow is failing - the browser dialog appears and it seems not to be able to fetch and store the token.
+**Current status:** With the version 1.50 the data refresh is now fully supported incl. a scheduled data refresh. Please let me know if you still find issues here.
 
 # Appendix
 For a technical background of PowerBi Custom Connectors, please check out the following pages:
