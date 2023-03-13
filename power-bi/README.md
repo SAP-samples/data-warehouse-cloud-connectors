@@ -3,7 +3,13 @@
 SPDX-License-Identifier: Apache-2.0
 SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
 --->
-## News
+## News 1.50
+What's new with Version 1.50?
+ - Renaming from DWC to Data Sphere
+ - Fetching new authentication token based on refresh token fixed
+ - Data refresh and scheduling for published reports is now working (requires MS on-prem gateway) 
+
+## News 1.40
 The OData API of SAP DataWarehouseCloud has been updated. Please upgrade to the new version 1.40.
 What's new with Version 1.40?
  - data refresh after publishing to PowerBi Web is now possible
