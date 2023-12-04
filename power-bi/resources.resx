@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessTypeAnalytical" xml:space="preserve">
+    <value>Analytical Data Access ( Analytical Dataset or Analytic Model)</value>
+  </data>
+  <data name="AccessTypeCaption" xml:space="preserve">
+    <value>Data Access Type</value>
+  </data>
+  <data name="AccessTypeDescription" xml:space="preserve">
+    <value>Select the data access type you like to use. Relational Access for relational view or analytical datasets, Analytical Access for Analytical Dataset of Analytic Model</value>
+  </data>
+  <data name="AccessTypeRelational" xml:space="preserve">
+    <value>Relational Data Access (Relational View or Analytical Dataset)</value>
+  </data>
   <data name="AuthenticationLabel" xml:space="preserve">
     <value>SAP Datasphere Authentication</value>
   </data>
@@ -131,6 +143,12 @@
   </data>
   <data name="DWC_HostDescription" xml:space="preserve">
     <value>Select the tenant URL of your SAP Datasphere System</value>
+  </data>
+  <data name="DWC_InputParams_Caption" xml:space="preserve">
+    <value>Input Parameter ()</value>
+  </data>
+  <data name="DWC_InputParams_Description" xml:space="preserve">
+    <value>Provide a list of input parameters in the format Column1='Value1',Column2='Value2'. The error message "Expected at least one key predicate but found none" indicates a missing mandatory variable name</value>
   </data>
   <data name="DWC_PopUp_CatalogSearch" xml:space="preserve">
     <value>SAP  Datasphere - OData - Catalog Search</value>
