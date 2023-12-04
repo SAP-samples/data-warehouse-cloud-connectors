@@ -20,7 +20,8 @@ Select analytical access on the connection screen.
 Enter the input paramters seperated by comma in the format: _column1='value1',column2='value2'_
 
 **Hint for input parameters: Errors**  
-The error message "Expected at least one key predicate but found none" indicates a missing mandatory parameter. Check your spelling or verify the name with the OData metadata defintion.
+The error message "Expected at least one key predicate but found none" indicates a missing mandatory parameter. Check your spelling or verify the name with the OData metadata defintion.  
+Where to find the parameter definiton: search for the EntityType with _Name=<viewname>Parameters_. Each key entry below represents a parameter.
 
 **Hint for input parameters: Entry Point Changed**  
 The parameters are set on the entity/view itself. When using parameters, the connector preselects the entity with the view name and adds the parameters. This is different to the non-parameter case, where the connector returns the URL of the service. Here the PowerBi user can/must select an entity/view.
