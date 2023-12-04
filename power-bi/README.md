@@ -3,6 +3,28 @@
 SPDX-License-Identifier: Apache-2.0
 SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
 --->
+## News 1.70
+What's new with Version 1.70?
+- **Switch between relational and analytical access:**  
+So far, the data access for always relational. As a consequence, e.g. no data aggregation takes place if you exclude columns in PowerBi. Now you can select between relational and analytical access. In the latter you see aggregation of data and associations resolved.
+
+  |View Type| Relational Access| Analytical Access|
+  |---------|------------------|------------------|
+  |relational|    yes | no |
+  |analytical dataset| yes | yes|
+  |analytic model | no | yes |
+
+- **Support for Analytic Model**  
+Select analytical access on the connection screen.
+- **Input Parameter Support**:  
+Enter the input paramters seperated by comma in the format: _column1='value1',column2='value2'_
+
+**Hint for input parameters: Errors**  
+The error message "Expected at least one key predicate but found none" indicates a missing mandatory parameter. Check your spelling or verify the name with the OData metadata defintion.
+
+**Hint for input parameters: Entry Point Changed**  
+The parameters are set on the entity/view itself. When using parameters, the connector preselects the entity with the view name and adds the parameters. This is different to the non-parameter case, where the connector returns the URL of the service. Here the PowerBi user can/must select an entity/view.
+
 ## News 1.50
 What's new with Version 1.50?
  - Renaming from DWC to Data Sphere
