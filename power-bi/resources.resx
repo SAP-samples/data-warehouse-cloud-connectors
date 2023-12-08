@@ -145,7 +145,7 @@
     <value>Select the tenant URL of your SAP Datasphere System</value>
   </data>
   <data name="DWC_InputParams_Caption" xml:space="preserve">
-    <value>Input Parameter ()</value>
+    <value>Input Parameter (Relational Views and Analytical Dataset)</value>
   </data>
   <data name="DWC_InputParams_Description" xml:space="preserve">
     <value>Provide a list of input parameters in the format Column1='Value1',Column2='Value2'. The error message "Expected at least one key predicate but found none" indicates a missing mandatory variable name</value>
