@@ -15,7 +15,7 @@ So far, the data access for always relational. As a consequence, e.g. no data ag
   |analytic model | no | yes |
 
 - **Support for Analytic Model**  
-Select analytical access on the connection screen.
+Select analytical access on the connection screen. If you observe an error like "Internal Server Error Error: Result cannot be empty" please re-deploy the Analytic Model. This resolved the issue in some cases. 
 - **Input Parameter Support**:  
 Enter the input paramters seperated by comma in the format: _column1='value1',column2='value2'_
 
