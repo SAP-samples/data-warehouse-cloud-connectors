@@ -3,6 +3,27 @@
 SPDX-License-Identifier: Apache-2.0
 SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
 --->
+## News 1.80
+
+**New connection type for generic OData URL**  
+A third connections type has been introduced allowing you to provide the full Odata service URL. The current connections for catalog and data come with a dialog asking for space, view, parameters etc. Based on these entities the OData service URL is determined. The new connection type offers you to directly enter the full URL.  
+
+  **Motivation for this new connection type:**  
+ - There are plans to offer a "copy OData URL"-option in the design time of SAP Datasphere. The new connection type is the counterpart to complete the scenario by offering a "paste" target.  
+ - You are not restricted to SAP Datasphere any more. As an example, you could connect to the SAP Analytics OData APIs as well. Other OData APIs which use the same authentication flow should work as well (not tested so far - feedback welcome).
+
+**Usage**  
+As we still need the system configuration (e.g. for OAuth client id and secret), the system must be selected.
+Enter the full path of the OData Serivce in the input field for "path". It must start with a "/".  
+Note: I have decided for the explicit selection of host name - instead of parsing the URL and search for host in the config file - as it reduces one source of errors (feedback welcome).
+
+**Example**  
+The service URL: _https://\<my-tenant\>.eu10.hcs.cloud.sap/dwaas-core/odata/v4/consumption/relational/\<mySpace\>\<myView\>_ is split into two fields for host and path:
+  |Dialog Field| Content|
+  |---------|------------------|
+  |Host:| \<my-tenant\>.eu10.hcs.cloud.sap (select from drop-down)|
+  |Path:|/dwaas-core/odata/v4/consumption/relational/\<mySpace\>/\<myView\>| 
+        
 ## News 1.70
 What's new with Version 1.70?
 - **Switch between relational and analytical access:**  

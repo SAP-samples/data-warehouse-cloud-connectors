@@ -156,6 +156,15 @@
   <data name="DWC_PopUp_ReadData" xml:space="preserve">
     <value>SAP  Datasphere - OData - Read Data</value>
   </data>
+  <data name="DWC_PopUp_URL" xml:space="preserve">
+    <value>SAP Datasphere - OData - Generic URL</value>
+  </data>
+  <data name="DWC_ServiceURL_Caption" xml:space="preserve">
+    <value>OData Service URL</value>
+  </data>
+  <data name="DWC_ServiceURL_Description" xml:space="preserve">
+    <value>Enter the path of the OData Service URL (path is the part of the URL after the host name). The seperation between host and path has been chosen to clearly show that you still need the host in your configuration. Otherwise relevant information like OAuth Information is not found.</value>
+  </data>
   <data name="DWC_SpaceCaption" xml:space="preserve">
     <value>Space Name</value>
   </data>

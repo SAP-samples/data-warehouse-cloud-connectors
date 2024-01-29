@@ -9,7 +9,7 @@ connections = Json.Document(Extension.Contents("connections.json"));
 redirect_uri    = "https://oauth.powerbi.com/views/oauthredirect.html";
 windowWidth     = 1200;
 windowHeight    = 1000;
-version         = "1.70";
+version         = "1.80";
 
 product_SAC     = "SAC";
 product_DWC     = "DWC";
@@ -62,6 +62,12 @@ inputParamsDWC = type text meta[
         DataSource.Path = false
     ];
 
+ServiceURLPath = type text meta[
+        Documentation.FieldCaption      = Extension.LoadString("DWC_ServiceURL_Caption"),
+        Documentation.FieldDescription  = Extension.LoadString("DWC_ServiceURL_Description"),
+        DataSource.Path = false
+    ];
+
 // Custom Connector Registration for SAP DWC
 // -------------------------------------------
 dwcFunction = type function (
@@ -81,6 +87,13 @@ dwcFunctionCatalog = type function (
     optional view   as viewNameDWC
     ) as any meta [
         Documentation.Name = Extension.LoadString("DWC_PopUp_CatalogSearch")
+    ];
+
+dwcFunctionURL = type function (
+    host            as hostCustomDWC,
+    path            as ServiceURLPath
+    ) as any meta [
+        Documentation.Name = Extension.LoadString("DWC_PopUp_URL")
     ];
 
 [DataSource.Kind="SapDataWarehouseCloudConnector", Publish="SapDataWarehouseCloudConnector.UI"]
@@ -116,6 +129,24 @@ shared SAPDWC_Catalog.Contents =
         service_url = getServiceURL(product_DWC, host, selectedSource, space, view, accesstype),
 
         log_serviceURL_msg = "Method SapDataWarehouseCloud.Contents ServiceUrl=" & service_url,
+        log_serviceURL = Diagnostics.Trace(TraceLevel.Information, log_serviceURL_msg, () => let result = log_serviceURL_msg in result, true),
+
+        source = enforceFunctionUsage(OData.Feed(service_url),{log_host, log_serviceURL})
+    in
+        source;
+
+[DataSource.Kind="SAPDWC_URL", Publish="SAPDWC_URL.UI"]
+shared SAPDWC_URL.Contents = 
+    Value.ReplaceType(SAPDWC_URL_Impl.Contents, dwcFunctionURL);
+
+   shared SAPDWC_URL_Impl.Contents = (host as text, path as text) =>
+    let
+        log_host_msg = "Method SAPDWC_URL_Impl.Contents reached ",
+        log_host = Diagnostics.Trace(TraceLevel.Information,log_host_msg, () => let result = log_host_msg in result, true),
+
+        service_url = "https://" & host & path,
+
+        log_serviceURL_msg = "Method SAPDWC_URL_Impl.Contents ServiceUrl=" & service_url,
         log_serviceURL = Diagnostics.Trace(TraceLevel.Information, log_serviceURL_msg, () => let result = log_serviceURL_msg in result, true),
 
         source = enforceFunctionUsage(OData.Feed(service_url),{log_host, log_serviceURL})
@@ -255,6 +286,17 @@ SAPDWC_Catalog = [
          ]
 ];
 
+SAPDWC_URL = [
+    TestConnection = (host) => {"SapDataWarehouseCloudConnector.TestConnection", host},
+    Authentication = [
+        OAuth = [
+              StartLogin  = StartLoginDWC
+            , FinishLogin = FinishLogin
+            , Refresh     = Refresh_DWC
+            ]
+         ]
+];
+
 SapDataWarehouseCloudConnector.UI = [
     Beta = true,
     dataSourceLabel = Extension.LoadString("ConnectionTitleDWC") & " - Data"& " (" & version & ")",
@@ -271,12 +313,25 @@ SAPDWC_Catalog.UI = [
     SourceTypeImage = SapDataWarehouseCloudConnector.Icons
 ];
 
+SAPDWC_URL.UI = [
+    Beta = true,
+    dataSourceLabel = Extension.LoadString("ConnectionTitleDWC")& " - Generic URL"& " (" & version & ")",
+    ButtonText      = { dataSourceLabel, Extension.LoadString("FormulaHelp") },
+    SourceImage     = SapDataWarehouseCloudConnector.Icons,
+    SourceTypeImage = SapDataWarehouseCloudConnector.Icons
+];
+
 SapDataWarehouseCloudConnector.Icons = [
     Icon16 = { Extension.Contents("dwc16.png"), Extension.Contents("dwc20.png"), Extension.Contents("dwc24.png"), Extension.Contents("dwc32.png") },
     Icon32 = { Extension.Contents("dwc32.png"), Extension.Contents("dwc40.png"), Extension.Contents("dwc48.png"), Extension.Contents("dwc64.png") }
 ];
 
 SAPDWC_Catalog.Icons = [
+    Icon16 = { Extension.Contents("dwc16.png"), Extension.Contents("dwc20.png"), Extension.Contents("dwc24.png"), Extension.Contents("dwc32.png") },
+    Icon32 = { Extension.Contents("dwc32.png"), Extension.Contents("dwc40.png"), Extension.Contents("dwc48.png"), Extension.Contents("dwc64.png") }
+];
+
+SAPDWC_URL.Icons = [
     Icon16 = { Extension.Contents("dwc16.png"), Extension.Contents("dwc20.png"), Extension.Contents("dwc24.png"), Extension.Contents("dwc32.png") },
     Icon32 = { Extension.Contents("dwc32.png"), Extension.Contents("dwc40.png"), Extension.Contents("dwc48.png"), Extension.Contents("dwc64.png") }
 ];
