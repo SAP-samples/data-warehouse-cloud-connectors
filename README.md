@@ -5,6 +5,18 @@ SPDX-License-Identifier: Apache-2.0
 SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
 --->
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/data-warehouse-cloud-connectors)](https://api.reuse.software/info/github.com/SAP-samples/data-warehouse-cloud-connectors)
+
+## Future Development and Support
+One of the most frequently asked questions is about the future development of the custom connector and support in case of problems. Let me summarize the current situation:
+
+Active development of the custom connector has ceased, but as new SAP Datasphere features are delivered, any impact on the custom connector will be considered and fixes may be provided. I would recommend using the custom connector only if the current feature set is sufficient for your needs, or as a starting point for your own development.
+
+As I have moved to a new department, I will be stepping back from supporting the custom connector and handing over to my colleague, Gustavo. Gustavo will continue to assist you with reported issues, but there is no support comparable to the standard SAP incident handling, nor can we provide any promises about fixes or resolution times.
+
+Thank you for all the feedback and discussions over the years that have helped shape the connector to where it is today.
+
+Best regards, Olaf Fischer
+
 ## Description
 This Git-Hub repo contains samples that enable 3rd-party clients to connect to SAP Data Warehouse Cloud. As of now there is one for [MS PowerBi](https://github.com/SAP-samples/sap-data-warehouse-cloud---connectors/blob/main/power-bi/README.md).
 
