@@ -7,25 +7,25 @@ SPDX-PackageComment = "The code in this project may include calls to APIs (\"API
 [[annotations]]
 path = "power-bi/dwc.mproj"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
 path = "power-bi/dwc.sln"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
 path = "power-bi/resources.resx"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
 path = "power-bi/connections.json"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
@@ -39,3 +39,9 @@ path = "power-bi/**.png"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Copyright (c) 2017 Microsoft Corporation"
 SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
+SPDX-License-Identifier = "Apache-2.0"
