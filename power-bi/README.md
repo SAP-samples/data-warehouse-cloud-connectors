@@ -3,6 +3,21 @@
 SPDX-License-Identifier: Apache-2.0
 SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors
 --->
+
+## News 1.90
+
+### Support for Technical User
+The connector for Consumption APIs now supports service-to-service authentication through the **OAuth 2.0 `client_credentials` grant**. This enables a technical (non-interactive) user to connect without a browser-based sign-in.
+
+#### How to Use It in Power BI  
+1. In the connector sign-in dialog, choose **Authentication Method → “OAuth Client Credentials.”**  
+2. Enter the **Client ID** and **Client Secret** generated when you registered the app.  
+3. Leave the existing **Access Token URL** in the system settings; no additional user details are required.
+
+#### Backward-Compatibility Notes  
+- Existing connections that use the **Authorization Code** flow continue to work unchanged.  
+- You can reuse the same system configuration (Access Token URL) if you switch to the new **Client Credentials** flow later.
+
 ## News 1.80
 
 **New connection type for generic OData URL**  
@@ -108,11 +123,11 @@ Please replace the dummy values based on the instructions below.
 ### _"auth_token_url"_
 > Copy the token URL from the _**App Integration**_ tab (URL typically ends with /token)
 ### _"auth_authorize_url"_
-> Copy the authorization URL from the _**App Integration**_ tab (typically ends with /authorize)
+> Copy the authorization URL from the _**App Integration**_ tab (typically ends with /authorize) (Optional for *Client Credentials*)
 ### _"client_id"_
-> Use the client id generated in the previous chapter.
+> Use the client id generated in the previous chapter. (Optional for *Client Credentials*)
 ### _"client_secret"_ 
-> Use the client secret generated in the previous chapter.
+> Use the client secret generated in the previous chapter. (Optional for *Client Credentials*)
 
 Now that we have all required information in place, apply the changes to the file connections.json and save it to your folder.
 
