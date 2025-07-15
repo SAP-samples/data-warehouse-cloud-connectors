@@ -1,9 +1,10 @@
-
-# Contributor Covenant Code of Conduct
 <!--- 
 SPDX-License-Identifier: CC-BY-4.0
 SPDX-FileCopyrightText: by Coraline Ada Ehmke in 2014
 --->
+
+# Contributor Covenant Code of Conduct
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our
