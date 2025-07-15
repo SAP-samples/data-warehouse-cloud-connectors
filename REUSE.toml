@@ -39,9 +39,3 @@ path = "power-bi/**.png"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Copyright (c) 2017 Microsoft Corporation"
 SPDX-License-Identifier = "MIT"
-
-[[annotations]]
-path = "**"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and sap-data-warehouse-cloud contributors"
-SPDX-License-Identifier = "Apache-2.0"
