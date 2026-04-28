@@ -25,17 +25,17 @@ hostCustomDWC = type text meta [
         Documentation.AllowedValues     = Table.FromRecords(List.Select(connections, each Record.Field(_,"product") = product_DWC))[host]
     ];
 
-selectOptionAccessType =    [relational = Extension.LoadString("AccesstypeRelational"), 
+selectOptionAccessType =    [relational = Extension.LoadString("AccesstypeRelational"),
                             analytical  = Extension.LoadString("AccesstypeAnalytical")];
 
-accessTypeOptions = type text meta [ 
+accessTypeOptions = type text meta [
         Documentation.FieldCaption      = Extension.LoadString("AccessTypeCaption"),
         Documentation.FieldDescription  = Extension.LoadString("AccessTypeDescription"),
         Documentation.AllowedValues     = { "relational","analytical" },
         DataSource.Path = false
     ];
 
-selectOptionDWC = [catalog = "1. "& Extension.LoadString("ODataSeriveTypeSearch"), 
+selectOptionDWC = [catalog = "1. "& Extension.LoadString("ODataSeriveTypeSearch"),
                    viewRel = "2. "& Extension.LoadString("ODataServiceTypeDWCView")];
 
 serviceSelectionDWC = type text meta [
@@ -97,7 +97,7 @@ dwcFunctionURL = type function (
     ];
 
 [DataSource.Kind="SapDataWarehouseCloudConnector", Publish="SapDataWarehouseCloudConnector.UI"]
-shared SapDataWarehouseCloudConnector.Contents = 
+shared SapDataWarehouseCloudConnector.Contents =
     Value.ReplaceType(SapDataWarehouseCloud.Contents, dwcFunction);
 
    shared SapDataWarehouseCloud.Contents = (host as text, accesstype as text, space as text, view as text, optional listOfInputParams as text) =>
@@ -111,11 +111,13 @@ shared SapDataWarehouseCloudConnector.Contents =
         log_serviceURL_msg = "Method SapDataWarehouseCloud.Contents ServiceUrl=" & service_url,
         log_serviceURL = Diagnostics.Trace(TraceLevel.Information, log_serviceURL_msg, () => let result = log_serviceURL_msg in result, true),
 
-        access_token = getAccesToken(host),
+        access_token = getAccessToken(host),
         options = [
             Headers = [
                 Authorization = "Bearer " & access_token
-            ]
+            ],
+            ODataVersion = 4,
+            Implementation = "2.0"
         ],
         source = if listOfInputParams = null then enforceFunctionUsage(OData.Feed(service_url, null, options),{log_host, log_serviceURL})
                                       else enforceFunctionUsage(OData.Feed(service_url&"/"&view&"("&listOfInputParams&")/Set", null, options),{log_host, log_serviceURL})
@@ -123,7 +125,7 @@ shared SapDataWarehouseCloudConnector.Contents =
         source;
 
 [DataSource.Kind="SAPDWC_Catalog", Publish="SAPDWC_Catalog.UI"]
-shared SAPDWC_Catalog.Contents = 
+shared SAPDWC_Catalog.Contents =
     Value.ReplaceType(SAPDWC_Catalog_Impl.Contents, dwcFunctionCatalog);
 
    shared SAPDWC_Catalog_Impl.Contents = (host as text, accesstype as text, optional space as text, optional view as text) =>
@@ -137,18 +139,20 @@ shared SAPDWC_Catalog.Contents =
         log_serviceURL_msg = "Method SAPDWC_Catalog_Impl.Contents ServiceUrl=" & service_url,
         log_serviceURL = Diagnostics.Trace(TraceLevel.Information, log_serviceURL_msg, () => let result = log_serviceURL_msg in result, true),
 
-        access_token = getAccesToken(host),
+        access_token = getAccessToken(host),
         options = [
             Headers = [
                 Authorization = "Bearer " & access_token
-            ]
+            ],
+            ODataVersion = 4,
+            Implementation = "2.0"
         ],
         source = enforceFunctionUsage(OData.Feed(service_url, null, options),{log_host, log_serviceURL})
     in
         source;
 
 [DataSource.Kind="SAPDWC_URL", Publish="SAPDWC_URL.UI"]
-shared SAPDWC_URL.Contents = 
+shared SAPDWC_URL.Contents =
     Value.ReplaceType(SAPDWC_URL_Impl.Contents, dwcFunctionURL);
 
    shared SAPDWC_URL_Impl.Contents = (host as text, path as text) =>
@@ -161,11 +165,13 @@ shared SAPDWC_URL.Contents =
         log_serviceURL_msg = "Method SAPDWC_URL_Impl.Contents ServiceUrl=" & service_url,
         log_serviceURL = Diagnostics.Trace(TraceLevel.Information, log_serviceURL_msg, () => let result = log_serviceURL_msg in result, true),
 
-        access_token = getAccesToken(host),
+        access_token = getAccessToken(host),
         options = [
             Headers = [
                 Authorization = "Bearer " & access_token
-            ]
+            ],
+            ODataVersion = 4,
+            Implementation = "2.0"
         ],
         source = enforceFunctionUsage(OData.Feed(service_url, null, options),{log_host, log_serviceURL})
     in
@@ -184,7 +190,7 @@ getServiceURL = (product as text, host as text, selectedSource as text, space as
         useDataService          = if Text.At(selectedSource,0) = "2" then true else false,
         useSACProviderService   = if Text.At(selectedSource,0) = "3" then true else false,
 
-        service_url_catalog = 
+        service_url_catalog =
             if useCatalogService = true and product = product_DWC then
                 Uri.Combine("https://" & host, catalog_path_DWC) & "?" & getCatalogParamsDWC(space, view)
             else "",
@@ -194,7 +200,7 @@ getServiceURL = (product as text, host as text, selectedSource as text, space as
             if useDataService = true and product = product_DWC then
                 if hasParamWithNull = false then
                     getServiceURLConsumptionDWC(host, catalog_path_DWC, space, view, accesstype)
-                else 
+                else
                     error "Parameters for Space and View must be provided."
             else "",
 
@@ -203,23 +209,23 @@ getServiceURL = (product as text, host as text, selectedSource as text, space as
         check = if service_url = "" then
                     error "Unknown OData Service Type."
                 else ""
-            
+
      in service_url
 ;
 
 getServiceURLConsumptionDWC = ( host as text, catalog_path as text, space as text, view as text, accesstype as text) =>
     let
-        access_token = getAccesToken(host),
+        access_token = getAccessToken(host),
         asset_search_url = "https://" & host & catalog_path & "?" & getCatalogParamsDWC(space, view),
         Response  = Web.Contents(
-            asset_search_url, 
+            asset_search_url,
             [ Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Bearer " & access_token]]),
         Parts = Json.Document(Response),
 
         serviceFound = not List.IsEmpty(Parts[value]),
 
-        service_url = if serviceFound = true 
-            then 
+        service_url = if serviceFound = true
+            then
                 if List.Count(Parts[value]) = 1 then
                      if accesstype = "relational" then
                         if List.First(Parts[value])[assetRelationalDataUrl] = null then
@@ -234,7 +240,7 @@ getServiceURLConsumptionDWC = ( host as text, catalog_path as text, space as tex
                         else error "Invalid Accesstype Provided: " & accesstype
                 else
                     error "Found more/less than one service with the given space and view names/patterns. Count is " & List.Count(Parts[value])
-            else 
+            else
                 error "The requested SAP DWC service for space "& space &" and view "& view &" could not be found.",
 
         service_url_non_null = if service_url = null then error "Field for service URL is empty - for space "& space &" and view "& view
@@ -245,36 +251,36 @@ getServiceURLConsumptionDWC = ( host as text, catalog_path as text, space as tex
 getCatalogParamsDWC = (space as nullable text, view as nullable text) =>
     let
 
-        params = 
+        params =
                 if space <> null and view = null
                 then "$filter=" & Uri.EscapeDataString("spaceName eq '"& space &"'")
-            else 
+            else
                 if view <> null and space = null
-                then "$filter=" & Uri.EscapeDataString("name eq '"& view &"'") 
-            else 
-                if view <> null and view <> null 
+                then "$filter=" & Uri.EscapeDataString("name eq '"& view &"'")
+            else
+                if view <> null and view <> null
                 then "$filter=" & Uri.EscapeDataString("spaceName eq '"& space &"'") & " and " & Uri.EscapeDataString("name eq '"& view &"'")
             else ""
     in
         params
 ;
 
-getAccesToken = (host as text) =>
+getAccessToken = (host as text) =>
     let
         connectionsFoundByHost = List.Select(connections, each Record.Field(_,"host") = host),
         connection = List.First(connectionsFoundByHost),
 
         credentials = Extension.CurrentCredential(),
         kind = Record.FieldOrDefault(credentials, "AuthenticationKind", "OAuth"),
-        accessToken =      
+        accessToken =
             if kind = "OAuth" then
                 credentials[access_token]
             else if kind = "UsernamePassword" then
                 TokenClientCredentials(credentials[Username], credentials[Password], connection[auth_token_url])[access_token]
-            else 
+            else
                 error "Unsupported credential type"
     in accessToken
-; 
+;
 
 enforceFunctionUsage = (value as any, traces as list) =>
     let
@@ -287,7 +293,7 @@ shared SapDataWarehouseCloudConnector.TestConnection = (host as text) =>
         // The current credentials can be retrieved using the Extension.CurrentCredential() function.
         // See: https://docs.microsoft.com/en-us/power-query/handlingauthentication
         result = true
-    in 
+    in
         result;
 
 shared SapAnalyticsCloudConnector.TestConnection = (host as text) =>
@@ -295,7 +301,7 @@ shared SapAnalyticsCloudConnector.TestConnection = (host as text) =>
         // The current credentials can be retrieved using the Extension.CurrentCredential() function.
         // See: https://docs.microsoft.com/en-us/power-query/handlingauthentication
         result = true
-    in 
+    in
         result;
 
 SapDataWarehouseCloudConnector = [
@@ -311,7 +317,7 @@ SapDataWarehouseCloudConnector = [
             UsernameLabel = "Client ID",
             PasswordLabel = "Client Secret"
         ]
-    ] 
+    ]
 ];
 
 SAPDWC_Catalog = [
@@ -401,8 +407,9 @@ StartLogin = (dataSourcePath, state, display, connections) =>
 
         AuthorizeUrl = connection[auth_authorize_url] & "?" & Uri.BuildQueryString(
             [
-                client_id = connection[client_id],
                 response_type = "code",
+                client_id = connection[client_id],
+                redirect_uri = redirect_uri,
                 state = state
             ])
     in
@@ -424,12 +431,13 @@ TokenMethod = (code, connection) =>
     let
          BasicAuth = Binary.ToText(Text.ToBinary(connection[client_id] & ":" & connection[client_secret]),0),
          Response  = Web.Contents(
-            connection[auth_token_url], 
+            connection[auth_token_url],
             [Content = Text.ToBinary(Uri.BuildQueryString(
                 [
                     code = code,
                     grant_type = "authorization_code",
-                    response_type = " token"
+                    response_type = " token",
+                    redirect_uri = redirect_uri
                 ])),
                 Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth]
             ]),
@@ -437,7 +445,7 @@ TokenMethod = (code, connection) =>
     in
         TokenList;
 
-TokenClientCredentials = (clientId, clientSecret, tokenUrl) => 
+TokenClientCredentials = (clientId, clientSecret, tokenUrl) =>
     let
         BasicAuth = Binary.ToText(Text.ToBinary(clientId & ":" & clientSecret),0),
          Response  = Web.Contents(
@@ -453,14 +461,14 @@ TokenClientCredentials = (clientId, clientSecret, tokenUrl) =>
     in
         TokenList;
 
-Refresh_DWC = (dataSourcePath, oldCredential) => 
+Refresh_DWC = (dataSourcePath, oldCredential) =>
     let
         product = product_DWC,
         result = Refresh(product, dataSourcePath, oldCredential)
     in
         result;
 
- Refresh = (product, dataSourcePath, oldCredential) => 
+ Refresh = (product, dataSourcePath, oldCredential) =>
     let
         host = Json.Document(dataSourcePath)[host],
         connectionsByProduct = List.Select(connections, each Record.Field(_,"product") = product),
@@ -480,7 +488,7 @@ Refresh_DWC = (dataSourcePath, oldCredential) =>
                           ,#"Authorization" = "Basic " & BasicAuth ],
 
         Response = Web.Contents(
-                      connection[auth_token_url], 
+                      connection[auth_token_url],
                       [ Content = Request,
                         Headers = RequestHeaders ]),
 
