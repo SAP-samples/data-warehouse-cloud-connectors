@@ -436,10 +436,10 @@ TokenMethod = (code, connection) =>
                 [
                     code = code,
                     grant_type = "authorization_code",
-                    response_type = " token",
                     redirect_uri = redirect_uri
                 ])),
-                Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth]
+                Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth],
+                ManualCredentials = true
             ]),
         TokenList = Json.Document(Response)
     in
@@ -452,10 +452,10 @@ TokenClientCredentials = (clientId, clientSecret, tokenUrl) =>
             tokenUrl,
             [Content = Text.ToBinary(Uri.BuildQueryString(
                 [
-                    grant_type = "client_credentials",
-                    response_type = " token"
+                    grant_type = "client_credentials"
                 ])),
-                Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth]
+                Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth],
+                ManualCredentials = true
             ]),
         TokenList = Json.Document(Response)
     in
@@ -490,7 +490,8 @@ Refresh_DWC = (dataSourcePath, oldCredential) =>
         Response = Web.Contents(
                       connection[auth_token_url],
                       [ Content = Request,
-                        Headers = RequestHeaders ]),
+                        Headers = RequestHeaders,
+                        ManualCredentials = true ]),
 
         NewTokenList = Json.Document(Response)
     in
