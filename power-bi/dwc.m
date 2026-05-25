@@ -183,7 +183,7 @@ shared SAPDWC_URL.Contents =
 getServiceURL = (product as text, host as text, selectedSource as text, space as nullable text, view as nullable text, accesstype as text) =>
     let
 
-        catalog_path_DWC = "/api/v1/dwc/catalog/assets",
+        catalog_path_DWC = "/api/v1/datasphere/consumption/catalog/assets",
 
         // use first char as "key"
         useCatalogService       = if Text.At(selectedSource,0) = "1" then true else false,
