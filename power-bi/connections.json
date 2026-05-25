@@ -7,7 +7,9 @@
     "client_secret": "<client secret>",
 
     "auth_token_url": "<token URL></oauth/token>",
-    "auth_authorize_url": "<authorize URL></oauth/authorize>"
+    "auth_authorize_url": "<authorize URL></oauth/authorize>",
+
+    "token_auth_method": "basic"
   },
   {
     "product": "SAC",
@@ -17,6 +19,8 @@
     "client_secret": "<client secret>",
 
     "auth_token_url": "<token URL></oauth/token>",
-    "auth_authorize_url": "<authorize URL></oauth/authorize>"
+    "auth_authorize_url": "<authorize URL></oauth/authorize>",
+
+    "token_auth_method": "basic"
   }
 ]

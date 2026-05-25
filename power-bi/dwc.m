@@ -272,11 +272,12 @@ getAccessToken = (host as text) =>
 
         credentials = Extension.CurrentCredential(),
         kind = Record.FieldOrDefault(credentials, "AuthenticationKind", "OAuth"),
+        tokenAuthMethod = Record.FieldOrDefault(connection, "token_auth_method", "basic"),
         accessToken =
             if kind = "OAuth" then
                 credentials[access_token]
             else if kind = "UsernamePassword" then
-                TokenClientCredentials(credentials[Username], credentials[Password], connection[auth_token_url])[access_token]
+                TokenClientCredentials(credentials[Username], credentials[Password], connection[auth_token_url], tokenAuthMethod)[access_token]
             else
                 error "Unsupported credential type"
     in accessToken
@@ -429,32 +430,64 @@ FinishLogin = (context, callbackUri, state) =>
 
 TokenMethod = (code, connection) =>
     let
-         BasicAuth = Binary.ToText(Text.ToBinary(connection[client_id] & ":" & connection[client_secret]),0),
-         Response  = Web.Contents(
+        tokenAuthMethod = Record.FieldOrDefault(connection, "token_auth_method", "basic"),
+
+        bodyFields = [
+            code = code,
+            grant_type = "authorization_code",
+            redirect_uri = redirect_uri
+        ],
+
+        bodyFieldsWithCreds = Record.Combine({bodyFields, [
+            client_id = connection[client_id],
+            client_secret = connection[client_secret]
+        ]}),
+
+        requestBody = if tokenAuthMethod = "post" then bodyFieldsWithCreds else bodyFields,
+
+        BasicAuth = Binary.ToText(Text.ToBinary(connection[client_id] & ":" & connection[client_secret]), 0),
+
+        requestHeaders = if tokenAuthMethod = "post" then
+            [#"Content-type" = "application/x-www-form-urlencoded", #"Accept" = "application/json"]
+        else
+            [#"Content-type" = "application/x-www-form-urlencoded", #"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth],
+
+        Response = Web.Contents(
             connection[auth_token_url],
-            [Content = Text.ToBinary(Uri.BuildQueryString(
-                [
-                    code = code,
-                    grant_type = "authorization_code",
-                    redirect_uri = redirect_uri
-                ])),
-                Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth],
+            [
+                Content = Text.ToBinary(Uri.BuildQueryString(requestBody)),
+                Headers = requestHeaders,
                 ManualCredentials = true
             ]),
         TokenList = Json.Document(Response)
     in
         TokenList;
 
-TokenClientCredentials = (clientId, clientSecret, tokenUrl) =>
+TokenClientCredentials = (clientId, clientSecret, tokenUrl, optional tokenAuthMethod) =>
     let
-        BasicAuth = Binary.ToText(Text.ToBinary(clientId & ":" & clientSecret),0),
-         Response  = Web.Contents(
+        authMethod = if tokenAuthMethod = null then "basic" else tokenAuthMethod,
+
+        bodyFields = [grant_type = "client_credentials"],
+
+        bodyFieldsWithCreds = Record.Combine({bodyFields, [
+            client_id = clientId,
+            client_secret = clientSecret
+        ]}),
+
+        requestBody = if authMethod = "post" then bodyFieldsWithCreds else bodyFields,
+
+        BasicAuth = Binary.ToText(Text.ToBinary(clientId & ":" & clientSecret), 0),
+
+        requestHeaders = if authMethod = "post" then
+            [#"Content-type" = "application/x-www-form-urlencoded", #"Accept" = "application/json"]
+        else
+            [#"Content-type" = "application/x-www-form-urlencoded", #"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth],
+
+        Response = Web.Contents(
             tokenUrl,
-            [Content = Text.ToBinary(Uri.BuildQueryString(
-                [
-                    grant_type = "client_credentials"
-                ])),
-                Headers=[#"Content-type" = "application/x-www-form-urlencoded",#"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth],
+            [
+                Content = Text.ToBinary(Uri.BuildQueryString(requestBody)),
+                Headers = requestHeaders,
                 ManualCredentials = true
             ]),
         TokenList = Json.Document(Response)
@@ -475,17 +508,29 @@ Refresh_DWC = (dataSourcePath, oldCredential) =>
         connectionsByHost    = List.Select(connectionsByProduct, each Record.Field(_,"host") = host),
         connection = List.First(connectionsByHost),
 
-        BasicAuth = Binary.ToText(Text.ToBinary(connection[client_id] & ":" & connection[client_secret]),0),
+        tokenAuthMethod = Record.FieldOrDefault(connection, "token_auth_method", "basic"),
 
         refreshToken = oldCredential,
 
-        Request = Text.ToBinary(Uri.BuildQueryString(
-                         [   refresh_token = refreshToken,
-                                grant_type = "refresh_token" ] )),
+        bodyFields = [
+            refresh_token = refreshToken,
+            grant_type = "refresh_token"
+        ],
 
-        RequestHeaders = [ #"Content-type" = "application/x-www-form-urlencoded"
-                          ,#"Accept" = "application/json"
-                          ,#"Authorization" = "Basic " & BasicAuth ],
+        bodyFieldsWithCreds = Record.Combine({bodyFields, [
+            client_id = connection[client_id],
+            client_secret = connection[client_secret]
+        ]}),
+
+        Request = Text.ToBinary(Uri.BuildQueryString(
+            if tokenAuthMethod = "post" then bodyFieldsWithCreds else bodyFields)),
+
+        BasicAuth = Binary.ToText(Text.ToBinary(connection[client_id] & ":" & connection[client_secret]), 0),
+
+        RequestHeaders = if tokenAuthMethod = "post" then
+            [#"Content-type" = "application/x-www-form-urlencoded", #"Accept" = "application/json"]
+        else
+            [#"Content-type" = "application/x-www-form-urlencoded", #"Accept" = "application/json", #"Authorization" = "Basic " & BasicAuth],
 
         Response = Web.Contents(
                       connection[auth_token_url],

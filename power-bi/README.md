@@ -128,6 +128,8 @@ Please replace the dummy values based on the instructions below.
 > Use the client id generated in the previous chapter. (Optional for *Client Credentials*)
 ### _"client_secret"_ 
 > Use the client secret generated in the previous chapter. (Optional for *Client Credentials*)
+### _"token_auth_method"_ (Optional)
+> Authentication method for token requests. Use `"basic"` (default) to send credentials via HTTP Basic Authentication header, or `"post"` to send client_id and client_secret in the request body. Use `"post"` if your identity provider rejects Basic Authentication with `invalid_client`.
 
 Now that we have all required information in place, apply the changes to the file connections.json and save it to your folder.
 
